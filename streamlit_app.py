@@ -2,9 +2,14 @@
 import streamlit as st
 #from snowflake.snowpark.context import get_active_session
 from snowflake.snowpark.functions import col
+import requests
 
 cnx = st.connection("snowflake")
 session = cnx.session()
+
+fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
+#st.text(fruityvice_response.json())
+fc_dv = st.dataframe(data=fruityvice_response.json(), use_container_width=true)
 
 # Write directly to the app
 st.title("Customize Your Smoothie")
